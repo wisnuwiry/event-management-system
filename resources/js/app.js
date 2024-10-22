@@ -16,8 +16,9 @@ const darkIcon = document.getElementById('dark-icon');
 // Load the theme from localStorage
 if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark');
-    lightIcon.classList.add('hidden');
-    darkIcon.classList.remove('hidden');
+    changeTheme('dark')
+}else {
+    changeTheme('light')
 }
 
 toggle.addEventListener('click', () => {
@@ -25,12 +26,20 @@ toggle.addEventListener('click', () => {
 
     // Toggle icons
     if (body.classList.contains('dark')) {
+        changeTheme('dark')
+    } else {
+        changeTheme('light')
+    }
+});
+
+function changeTheme(theme) {
+    if(theme === 'dark') {
         lightIcon.classList.add('hidden');
         darkIcon.classList.remove('hidden');
         localStorage.setItem('theme', 'dark');
-    } else {
+    }else {
         lightIcon.classList.remove('hidden');
         darkIcon.classList.add('hidden');
         localStorage.setItem('theme', 'light');
     }
-});
+}
