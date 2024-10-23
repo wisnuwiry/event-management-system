@@ -24,6 +24,8 @@ export default {
         forms, 
         require('flowbite/plugin')({
             charts: true,
+            wysiwyg: true,
         }),
+        require('flowbite-typography'),
     ],
 };

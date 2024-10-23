@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home.index');
 });
-
 
 
 Route::middleware('auth')->group(function () {
@@ -28,6 +29,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // News
+    Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news');
+
+    // Events
+    Route::get('/admin/events', [EventController::class, 'index'])->name('admin.events');
+
+    // Donations
+    Route::get('/admin/donations', function () {
+        return view('admin.donations.index');
+    })->name('admin.donations');
 
     // Route::resource('admin/events', EventController::class);
     // Route::resource('admin/news', NewsController::class);

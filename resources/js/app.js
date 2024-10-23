@@ -9,7 +9,7 @@ Alpine.start();
 
 // DARK MODE TOGGLE BUTTON
 const toggle = document.getElementById('theme-toggle');
-const body = document.body;
+const body = document.documentElement;
 const lightIcon = document.getElementById('light-icon');
 const darkIcon = document.getElementById('dark-icon');
 
