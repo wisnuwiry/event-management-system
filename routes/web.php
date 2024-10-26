@@ -32,6 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // News
     Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news');
+    Route::get('/admin/news/new', [NewsController::class, 'create'])->name('admin.news.create');
+    Route::post('/admin/news', [NewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
+    Route::delete('/admin/news/{id}/delete', [NewsController::class, 'destroy'])->name('admin.news.delete');
 
     // Events
     Route::get('/admin/events', [EventController::class, 'index'])->name('admin.events');
@@ -41,8 +45,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('admin.donations.index');
     })->name('admin.donations');
 
-    // Route::resource('admin/events', EventController::class);
-    // Route::resource('admin/news', NewsController::class);
 
     // Route::get('admin/donations', [DonationController::class, 'index'])->name('admin.donations.index');
     // Route::patch('admin/donations/{donation}/verify', [DonationController::class, 'verify'])->name('admin.donations.verify');

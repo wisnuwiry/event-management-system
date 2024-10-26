@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
@@ -9,7 +10,7 @@ use App\Models\News;
 class NewsController extends Controller
 {
     public function index() {
-        $news = News::all();
+        $news = News::paginate(10);
         return view('admin.news.index', compact('news'));
     }
 
@@ -18,15 +19,48 @@ class NewsController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required',
-            'slug' => 'required|unique:news,slug',
-        ]);
+        try{
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required',
+                'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            ]);
 
-        News::create($request->all());
+            $slug = Str::slug($request->title);
 
-        return redirect()->route('admin.news.index')->with('success', 'News created successfully.');
+            // Check if slug is unique, if not, append a number
+            $originalSlug = $slug;
+            $counter = 1;
+            while (News::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter++;
+            }
+            
+            $thumb = null;
+            if ($request->hasFile('thumbnail')) {
+                $thumb = $request->file('thumbnail')->store('thumbnails', 'public');
+            }        
+
+            // Set published status based on checkbox
+            $published = $request->has('published') ? 1 : 0;
+    
+            $news = News::create([
+                'title' => $request->title,
+                'content' => $request->content,
+                'slug' => $slug,
+                'thumbnail' => $thumb,
+                'published' => $request->published,
+                'published' => $published,
+            ]);
+
+    
+            return redirect()->route('admin.news')->with('success', 'News created successfully.');
+
+        }catch (\Exception $e) {
+            return back()
+                    ->withInput()
+                    ->withErrors('Failed to create news.');
+        }
+        
     }
 
     public function edit(News $news) {
@@ -42,12 +76,20 @@ class NewsController extends Controller
 
         $news->update($request->all());
 
-        return redirect()->route('admin.news.index')->with('success', 'News updated successfully.');
+        return redirect()->route('admin.news')->with('success', 'News updated successfully.');
     }
 
-    public function destroy(News $news) {
-        $news->delete();
+    public function destroy($id) {
+        try {
+            // Find the news item by ID
+            $news = News::findOrFail($id);
+            
+            // Delete the news item
+            $news->delete();
 
-        return redirect()->route('admin.news.index')->with('success', 'News deleted successfully.');
+            return redirect()->route('admin.news')->with('success', 'News deleted successfully.');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }
