@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\News;
+use Purifier;
 
 class NewsController extends Controller
 {
@@ -42,10 +44,11 @@ class NewsController extends Controller
 
             // Set published status based on checkbox
             $published = $request->has('published') ? 1 : 0;
+            $content = Purifier::clean($request->content);
     
             $news = News::create([
                 'title' => $request->title,
-                'content' => $request->content,
+                'content' => $content,
                 'slug' => $slug,
                 'thumbnail' => $thumb,
                 'published' => $request->published,
@@ -63,33 +66,54 @@ class NewsController extends Controller
         
     }
 
-    public function edit(News $news) {
+    public function edit($id) {
+        // Find the news item by ID
+        $news = News::findOrFail($id);
+        $news->content = html_entity_decode($news->content);
+
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(Request $request, News $news) {
+    public function update(Request $request, $id) {
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'slug' => 'required|unique:news,slug,' . $news->id,
         ]);
 
-        $news->update($request->all());
+        // Find the news item by ID
+        $news = News::findOrFail($id);
+        $data = $request->only(['title', 'content']);
+
+        if ($request->hasFile('thumbnail')) {
+            // Delete old thumbnail if exists
+            if ($news->thumbnail && Storage::exists('public/' . $news->thumbnail)) {
+                Storage::delete('public/' . $news->thumbnail);
+            }
+
+            // Store new thumbnail path
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        }        
+
+        // Set published status based on checkbox
+        $data['published'] = $request->has('published') ? 1 : 0;
+        $data['content'] = Purifier::clean($request->content);
+
+        $news->update($data);
 
         return redirect()->route('admin.news')->with('success', 'News updated successfully.');
     }
 
     public function destroy($id) {
-        try {
-            // Find the news item by ID
-            $news = News::findOrFail($id);
-            
-            // Delete the news item
-            $news->delete();
+        // Find the news item by ID
+        $news = News::findOrFail($id);
 
-            return redirect()->route('admin.news')->with('success', 'News deleted successfully.');
-        } catch (\Throwable $th) {
-            dd($th);
+        if ($news->thumbnail && Storage::exists('public/' . $news->thumbnail)) {
+            Storage::delete('public/' . $news->thumbnail);
         }
+        
+        // Delete the news item
+        $news->delete();
+
+        return redirect()->route('admin.news')->with('success', 'News deleted successfully.');
     }
 }

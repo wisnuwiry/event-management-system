@@ -36,9 +36,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/news', [NewsController::class, 'store'])->name('admin.news.store');
     Route::get('/admin/news/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
     Route::delete('/admin/news/{id}/delete', [NewsController::class, 'destroy'])->name('admin.news.delete');
+    Route::post('/admin/news/{id}/update', [NewsController::class, 'update'])->name('admin.news.update');
 
     // Events
     Route::get('/admin/events', [EventController::class, 'index'])->name('admin.events');
+    Route::get('/admin/events/new', [EventController::class, 'create'])->name('admin.events.create');
+    Route::post('/admin/events', [EventController::class, 'store'])->name('admin.events.store');
+    Route::get('/admin/events/{id}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
+    Route::delete('/admin/events/{id}/delete', [EventController::class, 'destroy'])->name('admin.events.delete');
+    Route::post('/admin/events/{id}/update', [EventController::class, 'update'])->name('admin.events.update');
+
 
     // Donations
     Route::get('/admin/donations', function () {

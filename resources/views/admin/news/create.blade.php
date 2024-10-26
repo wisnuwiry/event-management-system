@@ -6,6 +6,9 @@
     </x-slot>
 
     <x-dashboard-content>  
+    <form method="POST" action="{{ route('admin.news.store') }}" class="mx-auto" enctype="multipart/form-data">
+        @csrf
         @include('admin.news.partials.form')
+    </form>
     </x-dashboard-content>
 </x-app-layout>

@@ -1,11 +1,15 @@
-<div x-data="{ previewUrl: null, fileChosen(event) { 
-        const file = event.target.files[0]; 
-        if (file) {
-            this.previewUrl = URL.createObjectURL(file); 
+<div 
+    x-data="{ 
+        previewUrl: '{{ $currentImage != null ? asset('storage/' . $currentImage) : null }}', 
+        fileChosen(event) { 
+            const file = event.target.files[0]; 
+            if (file) {
+                this.previewUrl = URL.createObjectURL(file); 
+            } 
         } 
-    }}" 
-    class="flex items-center justify-center w-full">
-    
+    }" 
+    class="flex items-center justify-center w-full"
+>
     <label for="{{ $id }}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         
         <!-- Default Content -->
