@@ -21,25 +21,31 @@ if (localStorage.getItem('theme') === 'dark') {
     changeTheme('light')
 }
 
-toggle.addEventListener('click', () => {
-    body.classList.toggle('dark');
+if(toggle){
+    toggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
 
-    // Toggle icons
-    if (body.classList.contains('dark')) {
-        changeTheme('dark')
-    } else {
-        changeTheme('light')
-    }
-});
+        // Toggle icons
+        if (body.classList.contains('dark')) {
+            changeTheme('dark')
+        } else {
+            changeTheme('light')
+        }
+    });
+}
 
 function changeTheme(theme) {
     if(theme === 'dark') {
-        lightIcon.classList.add('hidden');
-        darkIcon.classList.remove('hidden');
+        if(lightIcon && darkIcon){
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        }
         localStorage.setItem('theme', 'dark');
     }else {
-        lightIcon.classList.remove('hidden');
-        darkIcon.classList.add('hidden');
+        if(lightIcon && darkIcon) {
+            lightIcon.classList.remove('hidden');
+            darkIcon.classList.add('hidden');
+        }
         localStorage.setItem('theme', 'light');
     }
 }
