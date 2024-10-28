@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
             'phone' => '123456789',
             'role' => 'admin',
             'expired_date' => now()->addYear(),
-            'avatar' => 'avatars/admin.png',
+            'avatar' => 'avatars/default.svg',
         ]);
     }
 }

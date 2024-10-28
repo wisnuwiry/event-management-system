@@ -4,11 +4,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublicEventController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Event
+Route::get('/events', [PublicEventController::class, 'index'])->name('events');
+Route::get('/events/{slug}', [PublicEventController::class, 'detail'])->name('events.detail');
 
 
 Route::middleware('auth')->group(function () {

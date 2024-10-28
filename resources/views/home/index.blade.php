@@ -1,4 +1,9 @@
 <x-guest-layout>
-    @include('home.partials.navbar')
+    <x-navbar/>
     @include('home.partials.carousel')
+    @include('home.partials.latest-events')
+    @include('home.partials.popular-events')
+    @include('home.partials.news')
+    <x-newslater/>
+    <x-footer/>
 </x-guest-layout>
