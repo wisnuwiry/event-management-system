@@ -4,19 +4,19 @@
     
     <!-- Events -->
      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4">
-        @foreach (range(1, 4) as $i)
-            <x-news-card />
+        @foreach ($latestNews as $news)
+            <x-news-card :news="$news"/>
         @endforeach
      </div>
 
 
     <div class="w-full flex flex-row justify-center">
-        <x-primary-button class="mt-10 inline-flex items-center">
+        <x-primary-link class="mt-10 inline-flex items-center" href="{{ route('news') }}">
             {{ __('View All') }}
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
             </svg>
-        </x-primary-button>
+        </x-primary-link>
     </div>
     </div>
 </section>

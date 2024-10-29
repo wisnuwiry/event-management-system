@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-navbar searchValue="{{ $search }}"/>
-    @include('events.partials.jumbotron')
-    @include('events.partials.events')
+    @include('news.partials.jumbotron')
+    @include('news.partials.news')
     <x-newslater/>
     <x-footer/>
 </x-guest-layout>

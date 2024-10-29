@@ -27,9 +27,10 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="min-h-[78vh]">
                 {{ $slot }}
             </main>
+            <x-footer-simple/>
         </div>
     </body>
 </html>

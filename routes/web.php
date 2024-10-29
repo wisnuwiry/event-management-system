@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicDonationController;
+use App\Http\Controllers\PublicNewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -16,6 +17,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/events', [PublicEventController::class, 'index'])->name('events');
 Route::get('/events/{slug}', [PublicEventController::class, 'detail'])->name('events.detail');
 
+// News
+Route::get('/news', [PublicNewsController::class, 'index'])->name('news');
+Route::get('/news/{slug}', [PublicNewsController::class, 'detail'])->name('news.detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
