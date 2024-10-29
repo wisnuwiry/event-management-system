@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -19,10 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Event
+    Route::post('/events/register/{id}', [PublicEventController::class, 'register'])->name('events.register');
+    Route::get('/profile/events', [ProfileController::class, 'edit'])->name('profile.events');
 });
 
-// TODO: adjust middleware admin
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     // Redirect Default to Dashboard
     Route::redirect('/admin', '/admin/dashboard');
 

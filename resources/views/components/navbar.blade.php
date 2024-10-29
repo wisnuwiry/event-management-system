@@ -1,4 +1,4 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-50 border-b border-b-gray-200 dark:border-b-gray-700">
+<nav class="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-40 border-b border-b-gray-200 dark:border-b-gray-700">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 py-2">
   <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <x-application-logo class="size-8 fill-current text-gray-800 dark:text-gray-200"/>
@@ -11,7 +11,7 @@
       <span class="sr-only">Search</span>
     </button>
     <div class="relative hidden md:block m-auto w-full mx-4">
-      <form class="flex items-center max-w-xl mx-auto">   
+      <form class="flex items-center max-w-md xl:max-w-xl mx-auto">   
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
           <div class="relative w-full">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -25,7 +25,38 @@
       </form>
     </div>
     <div class="flex flex-row items-center justify-center">
-      <x-primary-link :href="route('login')" class="w-max h-max">{{ __('Log In') }}</x-primary-link>
+    @auth
+        @php
+            $avatar = Auth::user()->avatar;
+            $defaultAvatar = 'avatars/default.png';
+        @endphp
+        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="size-8 rounded-full cursor-pointer" src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}" alt="User dropdown">
+        <!-- Dropdown menu -->
+        <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 z-50">
+            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div>{{ Auth::user()->name }}</div>
+                <div class="font-medium truncate">{{ Auth::user()->email }}</div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                </li>
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                </li>
+            </ul>
+            <form class="py-1 w-full" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            </form>
+        </div>
+    @else
+        <x-primary-link :href="route('login')" class="w-max h-max">{{ __('Log In') }}</x-primary-link>
+    @endauth
+      
       <x-theme-switcher/>
       <button data-collapse-toggle="navbar-search" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-search" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
