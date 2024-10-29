@@ -36,6 +36,6 @@ class PublicEventController extends Controller
         // Register the authenticated user for the event
         $event->users()->attach(Auth::id());
 
-        return redirect()->back()->with('success', 'You have successfully registered for the event.');
+        return redirect()->route('donation', ['previous' => url()->previous()])->with('success', 'You have successfully registered for the event.');
     }
 }

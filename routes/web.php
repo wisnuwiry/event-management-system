@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
+use App\Http\Controllers\PublicDonationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -24,6 +25,10 @@ Route::middleware('auth')->group(function () {
     // Event
     Route::post('/events/register/{id}', [PublicEventController::class, 'register'])->name('events.register');
     Route::get('/profile/events', [ProfileController::class, 'edit'])->name('profile.events');
+
+    // Donation
+    Route::get('/donation', [PublicDonationController::class, 'create'])->name('donation');
+    Route::post('/donation', [PublicDonationController::class, 'store'])->name('donation.store');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
