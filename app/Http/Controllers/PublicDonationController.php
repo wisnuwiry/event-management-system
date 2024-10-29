@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PublicDonationController extends Controller
 {
@@ -27,6 +29,11 @@ class PublicDonationController extends Controller
         }
 
         Donation::create($validatedData);
+
+        // Update the user's `expired_date` to one year from now
+        $user = Auth::user();
+        $user->expired_date = Carbon::now()->addYear();
+        $user->save();
 
         return redirect($request->input('previous'))->with('success', 'Thank you for your donation!');
     }
