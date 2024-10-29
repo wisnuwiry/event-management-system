@@ -11,7 +11,7 @@
       <span class="sr-only">Search</span>
     </button>
     <div class="relative hidden md:block m-auto w-full mx-4">
-      <form class="flex items-center max-w-md xl:max-w-xl mx-auto">   
+      <form method="GET" action="{{ route('events') }}" class="flex items-center max-w-md xl:max-w-xl mx-auto">   
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
           <div class="relative w-full">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -19,7 +19,7 @@
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                   </svg>
               </div>
-              <input type="search" id="default-search" class="block w-full p-2 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Events..." required />
+              <input type="search" id="default-search" name="search" value="{{ $searchValue ?? '' }}" class="block w-full p-2 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Events..." required />
               <button type="submit" class="text-white absolute end-2 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
           </div>
       </form>

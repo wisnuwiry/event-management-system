@@ -9,8 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class PublicEventController extends Controller
 {
-    public function index() {
-        return view('events.index');
+    public function index(Request $request) {
+        // Capture search keyword
+        $search = $request->input('search');
+
+        // Query events with search filter and paginate results
+        $events = Event::when($search, function ($query, $search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->orderBy('date', 'asc')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('events.index', compact('events', 'search'));
     }
 
     public function detail($slug) {
