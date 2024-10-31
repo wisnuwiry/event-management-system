@@ -24,7 +24,7 @@
                         {{ $item['published'] == true ? 'Published' : 'Draft' }}
                     </div>
                 </td>
-                <td class="px-6 py-4 flex flex-row gap-2">
+                <td class="px-6 py-4 gap-2">
                     <a href="{{ route('admin.news.edit', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     
                     <!-- Delete Button with Modal Trigger -->

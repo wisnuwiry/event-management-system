@@ -28,7 +28,10 @@ class PublicDonationController extends Controller
             $validatedData['receipt'] = $request->file('receipt')->store('receipts', 'public');
         }
 
-        Donation::create($validatedData);
+        $donation = new Donation($validated);
+        $donation->user_id = Auth::id();
+        $donation->status = 'pending';
+        $donation->save();
 
         // Update the user's `expired_date` to one year from now
         $user = Auth::user();

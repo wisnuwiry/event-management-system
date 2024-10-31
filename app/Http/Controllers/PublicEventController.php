@@ -49,4 +49,8 @@ class PublicEventController extends Controller
 
         return redirect()->route('donation', ['previous' => url()->previous()])->with('success', 'You have successfully registered for the event.');
     }
+
+    public function myEvents() {
+        return view('events.myevents');
+    }
 }

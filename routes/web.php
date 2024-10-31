@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\DonationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicDonationController;
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
     // Event
     Route::post('/events/register/{id}', [PublicEventController::class, 'register'])->name('events.register');
-    Route::get('/profile/events', [ProfileController::class, 'edit'])->name('profile.events');
+    Route::get('/profile/events', [PublicEventController::class, 'myEvents'])->name('profile.events');
 
     // Donation
     Route::get('/donation', [PublicDonationController::class, 'create'])->name('donation');
@@ -65,15 +66,11 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
 
     // Donations
-    Route::get('/admin/donations', function () {
-        return view('admin.donations.index');
-    })->name('admin.donations');
-
-
-    // Route::get('admin/donations', [DonationController::class, 'index'])->name('admin.donations.index');
-    // Route::patch('admin/donations/{donation}/verify', [DonationController::class, 'verify'])->name('admin.donations.verify');
+    Route::get('admin/donations', [DonationController::class, 'index'])->name('admin.donations');
+    Route::patch('admin/donations/{donation}/verify', [DonationController::class, 'verify'])->name('admin.donations.verify');
+    Route::patch('admin/donations/{donation}/reject', [DonationController::class, 'reject'])->name('admin.donations.reject');
     // Route::delete('admin/donations/{donation}', [DonationController::class, 'destroy'])->name('admin.donations.destroy');
-    // Route::get('admin/donations/{donation}', [DonationController::class, 'show'])->name('admin.donations.show');
+    Route::get('admin/donations/{id}', [DonationController::class, 'show'])->name('admin.donations.detail');
 });
 
 require __DIR__.'/auth.php';
