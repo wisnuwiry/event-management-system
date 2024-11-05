@@ -25,7 +25,8 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 gap-2">
-                    <a href="{{ route('admin.news.edit', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="{{ route('news.detail', $item->slug) }}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('View') }}</a>
+                    <a href="{{ route('admin.news.edit', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
                     
                     <!-- Delete Button with Modal Trigger -->
                     <button @click="confirmDelete = true; newsId = {{ $item['id'] }}" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>

@@ -12,9 +12,18 @@ use Purifier;
 
 class EventController extends Controller
 {
-    public function index() {
-        $events = Event::paginate(10);
-        return view('admin.events.index', compact('events'));
+    public function index(Request $request) {
+        // Capture search keyword
+        $search = $request->input('search');
+
+        $events = Event::when($search, function ($query, $search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'asc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.events.index', compact('events', 'search'));
     }
 
     public function create() {

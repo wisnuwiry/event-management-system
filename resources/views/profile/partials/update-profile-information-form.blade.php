@@ -1,4 +1,4 @@
-<section>
+<section class="p-4 bg-white rounded-lg border border-gray-200 sm:p-6 xl:p-8 dark:bg-gray-800 dark:border-gray-700">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Profile Information') }}
@@ -13,19 +13,25 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-4 grid grid-cols-2 gap-6">
         @csrf
         @method('patch')
 
-        <div>
+        <div class="col-span-2">
+            <x-input-label for="avatar" :value="__('Avatar')" />
+            <x-image-input id="avatar" class="mt-2 rounded-full" currentImage="{{ $user->avatar }}" />
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+        </div>
+
+        <div class="col-span-2 sm:col-span-1">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <div>
+        <div class="col-span-2 sm:col-span-1">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" readonly type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -45,6 +51,17 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <div class="col-span-2 sm:col-span-1">
+            <x-input-label for="nik" :value="__('NIK')" />
+            <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" type="number" :value="old('nik', $user->nik)" required autofocus placeholder="Insert your NIK" />
+            <x-input-error :messages="$errors->get('nik')" class="mt-2" />
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+            <x-input-label for="phone" :value="__('Phone Number')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone', $user->phone)" required autofocus placeholder="Insert your Phone Number" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">

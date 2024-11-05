@@ -28,7 +28,7 @@ class PublicDonationController extends Controller
             $validatedData['receipt'] = $request->file('receipt')->store('receipts', 'public');
         }
 
-        $donation = new Donation($validated);
+        $donation = new Donation($validatedData);
         $donation->user_id = Auth::id();
         $donation->status = 'pending';
         $donation->save();

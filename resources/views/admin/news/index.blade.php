@@ -11,7 +11,7 @@
                 <x-primary-link :href="route('admin.news.create')">
                     {{ __('Create News') }}
                 </x-primary-link>
-                <x-search-bar />
+                <x-search-bar value="{{ $search }}"/>
             </div>
             
             

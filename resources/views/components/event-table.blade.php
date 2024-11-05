@@ -34,9 +34,10 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 gap-2 justify-center items-center h-full">
-                    <a href="{{ route('admin.events.edit', $event->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="{{ route('events.detail', $event->slug) }}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('View') }}</a>
+                    <a href="{{ route('admin.events.edit', $event->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
                     <!-- Delete Button with Modal Trigger -->
-                    <button @click="confirmDelete = true; eventId = {{ $event['id'] }}" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                    <button @click="confirmDelete = true; eventId = {{ $event['id'] }}" class="font-medium text-red-600 dark:text-red-500 hover:underline">{{ __('Delete') }}</button>
                 </td>
             </tr>
             @endforeach

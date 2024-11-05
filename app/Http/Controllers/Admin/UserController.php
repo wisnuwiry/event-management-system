@@ -4,15 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.users.index');
+        // Capture search keyword
+        $search = $request->input('search');
+
+        $users = User::when($search, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })->orderBy('created_at', 'asc')
+        ->paginate(10)
+        ->withQueryString();
+
+        return view('admin.users.index', compact('users', 'search'));
     }
 
     /**
@@ -36,7 +46,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('admin.users.detail');
     }
 
     /**

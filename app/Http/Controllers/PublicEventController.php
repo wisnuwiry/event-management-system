@@ -45,12 +45,18 @@ class PublicEventController extends Controller
         }
 
         // Register the authenticated user for the event
-        $event->users()->attach(Auth::id());
+        $event->users()->attach(Auth::id(), [
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
 
         return redirect()->route('donation', ['previous' => url()->previous()])->with('success', 'You have successfully registered for the event.');
     }
 
     public function myEvents() {
-        return view('events.myevents');
+        $user = Auth::user();
+        $events = $user->events()->orderBy('date', 'asc')->get(); // Fetch and order by date
+
+        return view('events.myevents', compact('events'));
     }
 }

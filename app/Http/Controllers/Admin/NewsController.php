@@ -11,9 +11,18 @@ use Purifier;
 
 class NewsController extends Controller
 {
-    public function index() {
-        $news = News::paginate(10);
-        return view('admin.news.index', compact('news'));
+    public function index(Request $request) {
+        // Capture search keyword
+        $search = $request->input('search');
+
+        $news = News::when($search, function ($query, $search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'asc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.news.index', compact('news', 'search'));
     }
 
     public function create() {

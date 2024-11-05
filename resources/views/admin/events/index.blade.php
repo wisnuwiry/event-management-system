@@ -11,7 +11,7 @@
                 <x-primary-link :href="route('admin.events.create')">
                     {{ __('Create Event') }}
                 </x-primary-link>
-                <x-search-bar />
+                <x-search-bar value="{{ $search }}"/>
             </div>
             
             <x-event-table :events="$events" />

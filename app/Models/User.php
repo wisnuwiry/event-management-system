@@ -55,6 +55,8 @@ class User extends Authenticatable
 
     public function events()
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class)
+                ->withPivot('id', 'created_at', 'updated_at')
+                ->withTimestamps();
     }
 }
