@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'nik' => ['required', 'digits:16', 'numeric', 'regex:/^\d{16}$/', 'unique:users,nik'],
             'phone' => ['required', 'regex:/^62[0-9]{8,13}$/', 'numeric', 'unique:users,phone'],
+            'captcha' => ['required','captcha'],
         ]);
 
         $user = User::create([
@@ -50,5 +51,10 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('home', ['previous' => url()->previous()]));
+    }
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
     }
 }

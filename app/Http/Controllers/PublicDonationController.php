@@ -6,38 +6,51 @@ use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\BankAccount;
 
 class PublicDonationController extends Controller
 {
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $previousUrl = $request->query('previous', route('home'));
+        $bankAccounts = BankAccount::all();
 
-        return view('donation.create', compact('previousUrl'));
+        return view('donation.create', compact('previousUrl', 'bankAccounts'));
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'account_name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:1',
-            'bank' => 'required|string|max:255',
-            'receipt' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // Validate receipt as an image
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'account_name' => 'required|string|max:255',
+                'amount' => 'required|numeric|min:1',
+                'bank' => 'required|string|max:255',
+                'receipt' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // Validate receipt as an image
+            ]);
 
-        if ($request->hasFile('receipt')) {
-            $validatedData['receipt'] = $request->file('receipt')->store('receipts', 'public');
+            if ($request->hasFile('receipt')) {
+                $validatedData['receipt'] = $request->file('receipt')->store('receipts', 'public');
+            }
+
+            $donation = new Donation($validatedData);
+            $donation->user_id = Auth::id();
+            $donation->status = 'pending';
+            $donation->save();
+
+            // Update the user's `expired_date` to one year from now
+            $user = Auth::user();
+            $user->expired_date = Carbon::now()->addYear();
+            $user->save();
+
+            return redirect($request->input('previous'))->with('success', 'Thank you for your donation!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->errors())
+                ->withInput();
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', 'Failed to create donation.');
         }
-
-        $donation = new Donation($validatedData);
-        $donation->user_id = Auth::id();
-        $donation->status = 'pending';
-        $donation->save();
-
-        // Update the user's `expired_date` to one year from now
-        $user = Auth::user();
-        $user->expired_date = Carbon::now()->addYear();
-        $user->save();
-
-        return redirect($request->input('previous'))->with('success', 'Thank you for your donation!');
     }
 }

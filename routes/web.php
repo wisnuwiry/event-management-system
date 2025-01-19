@@ -5,12 +5,16 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\DonationController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SliderSettingController;
+use App\Http\Controllers\Admin\PartnerSettingController;
+use App\Http\Controllers\Admin\JournalSettingController;
+use App\Http\Controllers\Admin\BankSettingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicDonationController;
 use App\Http\Controllers\PublicNewsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -72,6 +76,38 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::patch('admin/donations/{donation}/reject', [DonationController::class, 'reject'])->name('admin.donations.reject');
     // Route::delete('admin/donations/{donation}', [DonationController::class, 'destroy'])->name('admin.donations.destroy');
     Route::get('admin/donations/{id}', [DonationController::class, 'show'])->name('admin.donations.detail');
+
+    // Settings
+    Route::get('admin/settings', [SettingController::class, 'index'])->name('admin.settings');
+
+    // Slider
+    Route::get('admin/settings/slider', [SliderSettingController::class, 'index'])->name('admin.settings.slider');
+    Route::post('admin/settings/slider', [SliderSettingController::class, 'store'])->name('admin.settings.slider.store');
+    Route::delete('admin/settings/slider/{slider}', [SliderSettingController::class, 'destroy'])->name('admin.settings.slider.delete');
+
+    // Partner
+    Route::get('admin/settings/partner', [PartnerSettingController::class, 'index'])->name('admin.settings.partner.index');
+    Route::get('admin/settings/partner/create', [PartnerSettingController::class, 'create'])->name('admin.settings.partner.create');
+    Route::post('admin/settings/partner', [PartnerSettingController::class, 'store'])->name('admin.settings.partner.store');
+    Route::delete('admin/settings/partner/{partner}', [PartnerSettingController::class, 'destroy'])->name('admin.settings.partner.delete');
+    Route::get('admin/settings/partner/{partner}/edit', [PartnerSettingController::class, 'edit'])->name('admin.settings.partner.edit');
+    Route::post('admin/settings/partner/{partner}/update', [PartnerSettingController::class, 'update'])->name('admin.settings.partner.update');
+
+    // Journal
+    Route::get('admin/settings/journal', [JournalSettingController::class, 'index'])->name('admin.settings.journal.index');
+    Route::get('admin/settings/journal/create', [JournalSettingController::class, 'create'])->name('admin.settings.journal.create');
+    Route::post('admin/settings/journal', [JournalSettingController::class, 'store'])->name('admin.settings.journal.store');
+    Route::delete('admin/settings/journal/{journal}', [JournalSettingController::class, 'destroy'])->name('admin.settings.journal.delete');
+    Route::get('admin/settings/journal/{journal}/edit', [JournalSettingController::class, 'edit'])->name('admin.settings.journal.edit');
+    Route::post('admin/settings/journal/{journal}/update', [JournalSettingController::class, 'update'])->name('admin.settings.journal.update');
+
+    // Bank
+    Route::get('admin/settings/bank', [BankSettingController::class, 'index'])->name('admin.settings.bank.index');
+    Route::get('admin/settings/bank/create', [BankSettingController::class, 'create'])->name('admin.settings.bank.create');
+    Route::post('admin/settings/bank', [BankSettingController::class, 'store'])->name('admin.settings.bank.store');
+    Route::delete('admin/settings/bank/{bank}', [BankSettingController::class, 'destroy'])->name('admin.settings.bank.delete');
+    Route::get('admin/settings/bank/{bank}/edit', [BankSettingController::class, 'edit'])->name('admin.settings.bank.edit');
+    Route::post('admin/settings/bank/{bank}/update', [BankSettingController::class, 'update'])->name('admin.settings.bank.update');
 });
 
 require __DIR__.'/auth.php';

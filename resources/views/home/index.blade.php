@@ -1,8 +1,11 @@
 <x-guest-layout>
     <x-navbar/>
     @include('home.partials.carousel')
+    @include('home.partials.partners')
     @include('home.partials.latest-events')
+    @include('home.partials.donation')
     @include('home.partials.popular-events')
+    @include('home.partials.testimonial')
     @include('home.partials.news')
     <x-newslater/>
     <x-footer/>

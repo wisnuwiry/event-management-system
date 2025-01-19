@@ -12,13 +12,14 @@ use Purifier;
 
 class EventController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // Capture search keyword
         $search = $request->input('search');
 
         $events = Event::when($search, function ($query, $search) {
-                $query->where('title', 'like', '%' . $search . '%');
-            })
+            $query->where('title', 'like', '%' . $search . '%');
+        })
             ->orderBy('created_at', 'asc')
             ->paginate(10)
             ->withQueryString();
@@ -26,11 +27,13 @@ class EventController extends Controller
         return view('admin.events.index', compact('events', 'search'));
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.events.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $request->validate([
                 'title' => 'required|string|max:255',
@@ -39,24 +42,24 @@ class EventController extends Controller
                 'description' => 'required|string',
                 'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ]);
-    
+
             $slug = Str::slug($request->title);
-    
+
             // Check if slug is unique, if not, append a number
             $originalSlug = $slug;
             $counter = 1;
             while (Event::where('slug', $slug)->exists()) {
                 $slug = $originalSlug . '-' . $counter++;
             }
-    
+
             $thumb = null;
             if ($request->hasFile('thumbnail')) {
                 $thumb = $request->file('thumbnail')->store('thumbnails', 'public');
             }
             $formattedDate = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
-    
+
             $description = Purifier::clean($request->description);
-    
+
             $event = Event::create([
                 'title' => $request->title,
                 'slug' => $slug,
@@ -65,17 +68,21 @@ class EventController extends Controller
                 'location' => $request->location,
                 'description' => $description,
             ]);
-    
+
             return redirect()->route('admin.events')->with('success', 'Event created successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->errors())
+                ->withInput();
         } catch (\Throwable $th) {
-            dd($th);
             return back()
                 ->withInput()
-                ->withErrors('Failed to create event.');
+                ->with('error', 'Failed to create event.');
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         // Find event by id
         $event = Event::findOrFail($id);
         $event->description = html_entity_decode($event->description);
@@ -84,44 +91,62 @@ class EventController extends Controller
         return view('admin.events.edit', compact('event'));
     }
 
-    public function update(Request $request, $id) {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'location' => 'required|string|max:255',
-            'description' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        ]);
+    public function update(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'date' => 'required|date',
+                'location' => 'required|string|max:255',
+                'description' => 'required',
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            ]);
 
-        $event = Event::findOrFail($id);
-        $data = $request->all();
+            $event = Event::findOrFail($id);
+            $data = $request->all();
 
-        if ($request->hasFile('thumbnail')) {
+            if ($request->hasFile('thumbnail')) {
+                if ($event->thumbnail && Storage::exists('public/' . $event->thumbnail)) {
+                    Storage::delete('public/' . $event->thumbnail);
+                }
+
+                $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+            }
+
+            $data['description'] = Purifier::clean($request->description);
+            $data['date'] = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
+
+            $event->update($data);
+
+            return redirect()->route('admin.events')->with('success', 'Event updated successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->errors())
+                ->withInput();
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', 'Failed to update event.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            // Find the news item by ID
+            $event = Event::findOrFail($id);
+
             if ($event->thumbnail && Storage::exists('public/' . $event->thumbnail)) {
                 Storage::delete('public/' . $event->thumbnail);
             }
 
-            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+            $event->delete();
+
+            return redirect()->route('admin.events')->with('success', 'Event deleted successfully.');
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', 'Failed to delete event.');
         }
-
-        $data['description'] = Purifier::clean($request->description);
-        $data['date'] = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
-
-        $event->update($data);
-
-        return redirect()->route('admin.events')->with('success', 'Event updated successfully.');
-    }
-
-    public function destroy($id) {
-        // Find the news item by ID
-        $event = Event::findOrFail($id);
-
-        if ($event->thumbnail && Storage::exists('public/' . $event->thumbnail)) {
-            Storage::delete('public/' . $event->thumbnail);
-        }
-
-        $event->delete();
-
-        return redirect()->route('admin.events')->with('success', 'Event deleted successfully.');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
-use Carbon\Carbon;
 
 class PublicNewsController extends Controller
 {
@@ -33,6 +32,7 @@ class PublicNewsController extends Controller
                           ->inRandomOrder()
                           ->limit(4)
                           ->get();
+
         $news->description = html_entity_decode($news->description);
 
         return view('news.detail', compact('news', 'relatedNews'));

@@ -8,14 +8,16 @@ use App\Models\Donation;
 
 class DonationController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // Query donations with search filter and paginate results
         $donations = Donation::paginate(10);
 
         return view('admin.donations.index', compact('donations'));
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $donation = Donation::findOrFail($id);
 
         return view('admin.donations.detail', compact('donation'));
@@ -23,14 +25,20 @@ class DonationController extends Controller
 
     public function verify($id)
     {
-        // Approve the donation
-        $donation = Donation::findOrFail($id);
-        if($donation->status == 'pending'){
-            $donation->status = 'complete';
-            $donation->save();
-        }
+        try {
+            // Approve the donation
+            $donation = Donation::findOrFail($id);
+            if ($donation->status == 'pending') {
+                $donation->status = 'complete';
+                $donation->save();
 
-        return redirect()->back()->with('success', 'Donation approved successfully.');
+                return redirect()->back()->with('success', 'Donation approved successfully.');
+            }
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', 'Failed to approve donation.');
+        }
     }
 
     public function reject(Request $request, $id)
@@ -41,15 +49,21 @@ class DonationController extends Controller
             ]);
             // Reject the donation with reason
             $donation = Donation::findOrFail($id);
-            if($donation->status == 'pending') {
+            if ($donation->status == 'pending') {
                 $donation->status = 'invalid';
                 $donation->rejection_reason = $request->input('reason');
-                $donation->save();    
+                $donation->save();
             }
-        
+
             return redirect()->back()->with('success', 'Donation rejected successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->errors())
+                ->withInput();
         } catch (\Throwable $th) {
-            dd($th);
+            return back()
+                ->withInput()
+                ->with('error', 'Failed to reject donation.');
         }
     }
 }

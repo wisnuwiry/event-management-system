@@ -1,4 +1,4 @@
-<section class="py-8 dark:bg-gray-900 lg:py-24">
+<section class="py-8 bg-gray-50 dark:bg-gray-800 lg:py-24">
     <div class="px-4 mx-auto max-w-screen-xl lg:px-4 lg:text-center">
     <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-4xl lg:leading-snug dark:text-white lg:text-center 2xl:px-48">{{ __('New Events') }}</h2>
     <p class="mb-10 text-lg font-normal text-gray-500 dark:text-gray-400 lg:text-center lg:text-xl lg:mb-16">

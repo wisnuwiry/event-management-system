@@ -1,7 +1,26 @@
+<div class="w-full bg-gray-100 dark:bg-gray-800">
+  <div class="max-w-screen-xl m-auto w-full px-8 py-2">
+    <ul class="flex flex-row gap-4 w-full items-end justify-end">
+      <li class="text-xs text-gray-500 sm:mb-0 dark:text-gray-400">
+        <a href="/" class="hover:underline">Privacy Policy</a>
+      </li>
+      <li class="text-xs text-gray-500 sm:mb-0 dark:text-gray-400">
+        <a href="/" class="hover:underline">Terms of Service</a>
+      </li>
+      <li class="text-xs text-gray-500 sm:mb-0 dark:text-gray-400">
+        <a href="https://adsii.or.id/contact/" class="hover:underline">Contact Us</a>
+      </li>
+      <li class="text-xs text-gray-500 sm:mb-0 dark:text-gray-400">
+        <a href="/" class="hover:underline">About Us</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <nav class="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-40 border-b border-b-gray-200 dark:border-b-gray-700">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 py-2">
   <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <x-application-logo class="size-8 fill-current text-gray-800 dark:text-gray-200"/>
+      <x-application-logo class="h-8 fill-current text-gray-800 dark:text-gray-200"/>
   </a>
   <div class="flex md:order-2 flex-1 justify-end">
     <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">

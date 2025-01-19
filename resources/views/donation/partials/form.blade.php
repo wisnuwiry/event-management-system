@@ -22,23 +22,12 @@
               <p class="text-base font-normal text-gray-500 dark:text-gray-400">{{ __('You can transfer donation funds to one of the accounts below') }}</p>
             </dl>
             <div class="space-y-2">
+              @foreach ($bankAccounts as $bankAccount)
               <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">BCA</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">12918219289</dd>
+                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">{{ $bankAccount->bank_name }}</dt>
+                <dd class="text-base font-medium text-gray-900 dark:text-white">{{ $bankAccount->account_number }}</dd>
               </dl>
-
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">BRI</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">232838293829389</dd>
-              </dl>
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">BNI</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">87384783478</dd>
-              </dl>
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Gopay</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">0823672327367</dd>
-              </dl>
+              @endforeach
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
     @include('news.partials.thumbnail')
     @include('news.partials.content')
     @include('news.partials.related')
+    @include('home.partials.donation')
     <x-newslater/>
     <x-footer/>
 </x-guest-layout>
