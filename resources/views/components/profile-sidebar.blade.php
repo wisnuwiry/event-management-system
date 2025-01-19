@@ -1,7 +1,7 @@
 <aside id="sidebar" class="hidden h-full w-80 shrink-0 overflow-y-auto border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800 lg:block lg:rounded-lg">
     <button type="button" class="dark:hover-bg-gray-700 mb-3 flex w-full items-center justify-between rounded-lg bg-white p-2 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700" type="button">
         <span class="sr-only">Open user menu</span>
-        <div class="flex w-full items-center justify-between">
+        <a class="flex w-full items-center justify-between" href="{{ route('profile.edit') }}">
             <div class="flex items-center">
                 @php
                 $avatar = Auth::user()->avatar;
@@ -13,7 +13,7 @@
                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->email }}</div>
                 </div>
             </div>
-        </div>
+        </a>
     </button>
 
     <ul class="space-y-2">

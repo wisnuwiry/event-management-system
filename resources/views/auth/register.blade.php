@@ -14,75 +14,75 @@
                     <form method="POST" action="{{ route('register') }}" class="pt-6">
                         @csrf
 
-                        <div class="flex flex-col lg:flex-row gap-4">
-                            <div class="flex-1">
-                                <!-- Name -->
-                                <div>
-                                    <x-input-label for="name" :value="__('Name')" />
-                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Insert your name" />
-                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                                </div>
-
-                                <!-- Email Address -->
-                                <div class="mt-4">
-                                    <x-input-label for="email" :value="__('Email')" />
-                                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="name@email.com" />
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                                </div>
-
-                                <!-- Password -->
-                                <div class="mt-4">
-                                    <x-input-label for="password" :value="__('Password')" />
-
-                                    <x-text-input id="password" class="block mt-1 w-full"
-                                        type="password"
-                                        name="password"
-                                        placeholder="••••••••"
-                                        required autocomplete="new-password" />
-
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
-
-                                <!-- Confirm Password -->
-                                <div class="mt-4">
-                                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                                    <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                        type="password"
-                                        placeholder="••••••••"
-                                        name="password_confirmation" required autocomplete="new-password" />
-
-                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                                </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <!-- Name -->
+                            <div class="mt-4">
+                                <x-input-label for="name" :value="__('Name')"><x-required-indicator /></x-input-label>
+                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Insert your name" />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
 
-                            <div class="flex-1">
-                                <div>
-                                    <x-input-label for="nik" :value="__('NIK')" />
-                                    <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" type="number" :value="old('nik')" required autofocus placeholder="Insert your NIK" />
-                                    <x-input-error :messages="$errors->get('nik')" class="mt-2" />
-                                </div>
-                                <div class="mt-4">
-                                    <x-input-label for="phone" :value="__('Phone Number')" />
-                                    <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus placeholder="Insert your Phone Number" />
-                                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-                                </div>
+                            <!-- Email Address -->
+                            <div class="mt-4">
+                                <x-input-label for="email" :value="__('Email')"><x-required-indicator /></x-input-label>
+                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="name@email.com" />
+                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            </div>
+
+                            <!-- NIK -->
+                            <div class="mt-4">
+                                <x-input-label for="nik" :value="__('NIK')"><x-required-indicator /></x-input-label>
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" type="number" :value="old('nik')" required autofocus placeholder="Insert your NIK" />
+                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="mt-4">
+                                <x-input-label for="phone" :value="__('Phone Number')"><x-required-indicator /></x-input-label>
+                                <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus placeholder="Insert your Phone Number" />
+                                <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mt-4">
+                                <x-input-label for="password" :value="__('Password')"><x-required-indicator /></x-input-label>
+
+                                <x-text-input id="password" class="block mt-1 w-full"
+                                    type="password"
+                                    name="password"
+                                    placeholder="••••••••"
+                                    required autocomplete="new-password" />
+
+                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="mt-4">
+                                <x-input-label for="password_confirmation" :value="__('Confirm Password')"><x-required-indicator /></x-input-label>
+
+                                <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    name="password_confirmation" required autocomplete="new-password" />
+                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</label>
-                            <div class="col-md-6 captcha">
-                                <span>{!! captcha_img() !!}</span>
-                                <button type="button" class="btn btn-danger" class="reload" id="reload">
+                        <!-- Captcha -->
+                        <div class="flex flex-col gap-2 mt-8 justify-start items-start">
+                            <x-input-label :value="__('Captcha')">
+                                <button type="button" class="text-red-500" class="reload" id="reload">
                                     &#x21bb;
                                 </button>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="captcha" class="col-md-4 col-form-label text-md-right">Enter Captcha</label>
-                            <div class="col-md-6">
-                                <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                            </x-input-label>
+
+                            <div class="flex flex-row gap-4 items-center">
+                                <div class="col-md-6 captcha">
+                                    <span>{!! captcha_img() !!}</span>
+                                </div>
+
+                                <x-text-input id="captcha" class="block mt-1 w-full max-w-40" type="text" name="captcha" required autofocus placeholder="Enter captcha" />
+                                <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
                             </div>
                         </div>
 
