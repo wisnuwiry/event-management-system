@@ -5,6 +5,7 @@
                 <th scope="col" class="px-6 py-3">Name</th>
                 <th scope="col" class="px-6 py-3">Amount</th>
                 <th scope="col" class="px-6 py-3">Date</th>
+                <th scope="col" class="px-6 py-3">Event</th>
                 <th scope="col" class="px-6 py-3">Status</th>
                 <th scope="col" class="px-6 py-3">Action</th>
             </tr>
@@ -16,13 +17,22 @@
                     <div>
                         <div class="text-base font-semibold">{{ $donation->user->name }}</div>
                         <div class="font-normal text-gray-500">{{ $donation->user->email }}</div>
-                    </div>  
+                    </div>
                 </th>
                 <td class="px-6 py-4">{{ Illuminate\Support\Number::currency($donation->amount, 'IDR', 'id') }}</td>
                 <td class="px-6 py-4">{{ $donation->created_at }}</td>
                 <td class="px-6 py-4">
+                    @if ($donation->event)
+                    <a href="/events/{{ $donation->event->slug }}" target="_blank" class="hover:underline">
+                        {{ $donation->event->title }}
+                    </a>
+                    @else
+                    -
+                    @endif
+                </td>
+                <td class="px-6 py-4">
                     <div class="flex items-center">
-                        <div class="h-2.5 w-2.5 rounded-full {{ $donation['status'] == 'pending' ? 'bg-yellow-500' : ($donation['status'] == 'complete' ? 'bg-green-500' : 'bg-red-500') }} me-2"></div> 
+                        <div class="h-2.5 w-2.5 rounded-full {{ $donation['status'] == 'pending' ? 'bg-yellow-500' : ($donation['status'] == 'complete' ? 'bg-green-500' : 'bg-red-500') }} me-2"></div>
                         {{ $donation['status'] }}
                     </div>
                 </td>

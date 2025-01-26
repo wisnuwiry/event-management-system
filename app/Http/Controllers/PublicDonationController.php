@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\BankAccount;
+use App\Models\Event;
 
 class PublicDonationController extends Controller
 {
     public function create(Request $request)
     {
+        $eventId = $request->query('event');
         $previousUrl = $request->query('previous', route('home'));
         $bankAccounts = BankAccount::all();
 
-        return view('donation.create', compact('previousUrl', 'bankAccounts'));
+        $event = Event::findOrFail($eventId);
+
+        return view('donation.create', compact('previousUrl', 'bankAccounts', 'event'));
     }
 
     public function store(Request $request)
@@ -26,6 +30,7 @@ class PublicDonationController extends Controller
                 'amount' => 'required|numeric|min:1',
                 'bank' => 'required|string|max:255',
                 'receipt' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // Validate receipt as an image
+                'event_id' => 'nullable|exists:events,id',
             ]);
 
             if ($request->hasFile('receipt')) {

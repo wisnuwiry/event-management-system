@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SliderSettingController;
 use App\Http\Controllers\Admin\PartnerSettingController;
 use App\Http\Controllers\Admin\JournalSettingController;
 use App\Http\Controllers\Admin\BankSettingController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicDonationController;
@@ -49,9 +50,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/users/{id}', [UserController::class, 'show'])->name('admin.users.detail');
     
     // Dashboard
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // News
     Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news');

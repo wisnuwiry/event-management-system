@@ -38,8 +38,8 @@
 
                             <!-- Phone -->
                             <div class="mt-4">
-                                <x-input-label for="phone" :value="__('Phone Number')"><x-required-indicator /></x-input-label>
-                                <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus placeholder="Insert your Phone Number" />
+                                <x-input-label for="phone" :value="__('Whatsapp')"><x-required-indicator /></x-input-label>
+                                <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus placeholder="Insert your Whatsapp" />
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                             </div>
 
