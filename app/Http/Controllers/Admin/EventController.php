@@ -130,6 +130,33 @@ class EventController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        // Find event by id
+        $event = Event::with('donations')->findOrFail($id);
+        $event->date = Carbon::parse($event->date);
+
+        $donations = $event->donations;
+        $validDonations = $donations->where('status', 'complete')->sum('amount');
+        $pendingDonations = $donations->where('status', 'pending')->sum('amount');
+        $totalDonations = $donations->sum('amount');
+        $totalItemsDonations = $donations->count();
+        $registeredUsers = $event->users;
+
+        return view(
+            'admin.events.detail',
+            compact(
+                'event',
+                'donations',
+                'validDonations',
+                'pendingDonations',
+                'totalDonations',
+                'totalItemsDonations',
+                'registeredUsers'
+            )
+        );
+    }
+
     public function destroy($id)
     {
         try {

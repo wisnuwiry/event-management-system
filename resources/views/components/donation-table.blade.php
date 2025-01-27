@@ -20,7 +20,7 @@
                     </div>
                 </th>
                 <td class="px-6 py-4">{{ Illuminate\Support\Number::currency($donation->amount, 'IDR', 'id') }}</td>
-                <td class="px-6 py-4">{{ $donation->created_at }}</td>
+                <td class="px-6 py-4">{{ \Carbon\Carbon::parse($donation->created_at)->format('Y/m/d H:i') }}</td>
                 <td class="px-6 py-4">
                     @if ($donation->event)
                     <a href="/events/{{ $donation->event->slug }}" target="_blank" class="hover:underline">

@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/events/{id}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
     Route::delete('/admin/events/{id}/delete', [EventController::class, 'destroy'])->name('admin.events.delete');
     Route::post('/admin/events/{id}/update', [EventController::class, 'update'])->name('admin.events.update');
-
+    Route::get('/admin/events/{id}', [EventController::class, 'detail'])->name('admin.events.detail');
 
     // Donations
     Route::get('admin/donations', [DonationController::class, 'index'])->name('admin.donations');

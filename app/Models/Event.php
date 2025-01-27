@@ -14,11 +14,11 @@ class Event extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();;
     }
 
     public function donations()
     {
-        return $this->belongsToMany(Donation::class);
+        return $this->hasMany(Donation::class);
     }
 }

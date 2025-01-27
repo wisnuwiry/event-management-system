@@ -1,4 +1,4 @@
-<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+<div class="bg-white border border-gray-200 rounded-lg hover:shadow-md dark:bg-gray-900 dark:border-gray-700">
     <a href="{{ route('events.detail', $event->slug ) }}">
         <img class="rounded-t-lg aspect-[29/19] object-cover min-h-[170px] w-full bg-gray-200" src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event['title'] }} image" />
     </a>

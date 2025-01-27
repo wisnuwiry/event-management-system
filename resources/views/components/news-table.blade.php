@@ -17,7 +17,7 @@
                         <div class="text-base font-semibold">{{ $item['title'] }}</div>
                     </div>  
                 </th>
-                <td class="px-6 py-4">{{ $item['published'] == true ?  $item['created_at'] : '-' }}</td>
+                <td class="px-6 py-4">{{ $item['published'] == true ?  \Carbon\Carbon::parse($item['created_at'])->format('Y/m/d H:i') : '-' }}</td>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
                         <div class="h-2.5 w-2.5 rounded-full {{ $item['published'] == true ? 'bg-green-500' : 'bg-gray-500' }} me-2"></div> 

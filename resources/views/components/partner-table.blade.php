@@ -18,7 +18,7 @@
                     </div>  
                 </th>
                 <td class="px-6 py-4"><a href="{{ $item['link'] }}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $item['link'] }}</a></td>
-                <td class="px-6 py-4">{{ $item['created_at'] }}</td>
+                <td class="px-6 py-4">{{ \Carbon\Carbon::parse($item->created_at)->format('Y/m/d H:i') }}</td>
                 <td class="px-6 py-4 gap-2">
                     <a href="{{ route('admin.settings.partner.edit', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
                     
