@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -46,7 +47,11 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.users.detail');
+        $user = User::findOrFail($id);
+        $donations = Donation::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
+        $events = $user->events()->orderBy('created_at', 'asc')->get();
+
+        return view('admin.users.detail', compact('user', 'donations', 'events'));
     }
 
     /**

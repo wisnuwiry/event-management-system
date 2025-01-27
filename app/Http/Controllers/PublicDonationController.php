@@ -61,7 +61,7 @@ class PublicDonationController extends Controller
 
     public function myDonations(){
         $user = Auth::user();
-        $donations = Donation::where('user_id', $user->id)->get();
+        $donations = Donation::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
 
         return view('donation.mydonations', compact('donations'));
     }

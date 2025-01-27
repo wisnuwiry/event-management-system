@@ -6,8 +6,10 @@
     </x-slot>
 
     <x-dashboard-content>
-        <div class="relative flex flex-col justify-center">
-            
+        <div class="flex flex-col gap-8">
+            @include('admin.users.partials.overview')
+            @include('admin.users.partials.donations')
+            @include('admin.users.partials.events')
         </div>
     </x-dashboard-content>
 </x-app-layout>
