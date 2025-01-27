@@ -49,6 +49,8 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     // User Management
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
     Route::get('/admin/users/{id}', [UserController::class, 'show'])->name('admin.users.detail');
+    Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::patch('/admin/users/{id}/update', [UserController::class, 'update'])->name('admin.users.update');
     
     // Dashboard
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');

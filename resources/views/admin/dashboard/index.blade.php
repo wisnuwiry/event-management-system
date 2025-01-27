@@ -11,14 +11,10 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
 
-                    {!! $donationCharts->container() !!}
                 </div>
             </div>
         </div>
 
         @include('admin.dashboard.partials.overview')
     </div>
-
-    <script src="{{ $chart->cdn() }}"></script>
-    {{ $chart->script() }}
 </x-app-layout>
