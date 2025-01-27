@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Donation
     Route::get('/donation', [PublicDonationController::class, 'create'])->name('donation');
     Route::post('/donation', [PublicDonationController::class, 'store'])->name('donation.store');
+    Route::get('/profile/donations', [PublicDonationController::class, 'myDonations'])->name('profile.donations');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {

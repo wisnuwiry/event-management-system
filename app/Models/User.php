@@ -23,9 +23,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'nik',
-        'phone', 
-        'expired_date', 
-        'avatar', 
+        'phone',
+        'expired_date',
+        'avatar',
         'role'
     ];
 
@@ -56,7 +56,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function events()
     {
         return $this->belongsToMany(Event::class)
-                ->withPivot('id', 'created_at', 'updated_at')
-                ->withTimestamps();
+            ->withPivot('id', 'created_at', 'updated_at')
+            ->withTimestamps();
+    }
+
+    public function donations()
+    {
+        return $this->belongsToMany(Donation::class)
+            ->withPivot('id', 'created_at', 'updated_at')
+            ->withTimestamps();
     }
 }

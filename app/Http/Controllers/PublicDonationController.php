@@ -58,4 +58,11 @@ class PublicDonationController extends Controller
                 ->with('error', 'Failed to create donation.');
         }
     }
+
+    public function myDonations(){
+        $user = Auth::user();
+        $donations = Donation::where('user_id', $user->id)->get();
+
+        return view('donation.mydonations', compact('donations'));
+    }
 }
