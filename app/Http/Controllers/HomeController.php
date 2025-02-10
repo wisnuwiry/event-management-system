@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         $latestEvents = Event::orderBy('created_at', 'desc')->limit(8)->get();
-        $popularEvents = Event::orderBy('created_at', 'desc')->limit(8)->get();
+        $popularEvents = Event::orderBy('date', 'desc')->limit(8)->get();
 
         $latestNews = News::orderBy('created_at', 'desc')->limit(4)->get();
         $carousels = Carousel::orderBy('created_at', 'desc')->get();

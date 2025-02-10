@@ -17,7 +17,12 @@ class PublicDonationController extends Controller
         $previousUrl = $request->query('previous', route('home'));
         $bankAccounts = BankAccount::all();
 
-        $event = Event::findOrFail($eventId);
+        // Set null $event if eventId is null
+        if ($eventId === null) {
+            $event = null;
+        } else {
+            $event = Event::findOrFail($eventId);
+        }
 
         return view('donation.create', compact('previousUrl', 'bankAccounts', 'event'));
     }
