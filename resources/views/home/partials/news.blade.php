@@ -3,7 +3,7 @@
     <h2 class="mb-10 text-2xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-4xl lg:leading-snug dark:text-white lg:text-center 2xl:px-48">{{ __('Our Blog') }}</h2>
     
     <!-- Events -->
-     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4">
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:grid-cols-4">
         @foreach ($latestNews as $news)
             <x-news-card :news="$news"/>
         @endforeach

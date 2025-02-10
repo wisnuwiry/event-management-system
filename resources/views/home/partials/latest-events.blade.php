@@ -6,7 +6,7 @@
     </p>
 
     <!-- Events -->
-     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4">
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:grid-cols-4">
         @foreach ($latestEvents as $event)
             <x-event-card :event="$event"/>
         @endforeach

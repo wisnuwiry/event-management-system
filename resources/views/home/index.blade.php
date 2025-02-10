@@ -2,6 +2,7 @@
     <x-navbar/>
     @include('home.partials.carousel')
     @include('home.partials.partners')
+    @include('home.partials.programs')
     @include('home.partials.latest-events')
     @include('home.partials.donation')
     @include('home.partials.popular-events')
