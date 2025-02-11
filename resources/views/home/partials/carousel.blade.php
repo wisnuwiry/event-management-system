@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div id="indicators-carousel" class="m-auto relative w-full aspect-[10/8] md:aspect-[20/9]" data-carousel="static">
+    <div id="indicators-carousel" class="m-auto relative w-full aspect-[10/9] lg:aspect-[20/9]" data-carousel="static">
         <!-- Carousel wrapper -->
         <div class="relative overflow-hidden w-full h-full">
             @foreach ($carousels as $carousel)
@@ -32,7 +32,7 @@
                 </button>
 
                 <!-- CTA/Search Form -->
-                <div class="flex flex-col max-w-5xl w-full">
+                <div class="flex flex-col max-w-5xl w-full mt-[-10%]">
                     <!-- Greeting -->
                     <div class="flex flex-col gap-4 mb-4 lg:mb-10 items-center w-full">
                         <div class="text-sm px-4 py-1 font-medium text-gray-700 bg-gray-100/60 border border-gray-200 rounded-full dark:bg-gray-800/60 dark:text-white dark:border-gray-400">
@@ -43,13 +43,13 @@
                     </div>
 
                     <!-- Form -->
-                    <div class="w-full bg-white/80 border border-neutral-300 py-4 px-5 lg:px-8 rounded-2xl dark:bg-black/80 dark:border-neutral-700">
+                    <div class="w-full bg-white/80 border-4 border-neutral-300 py-4 px-5 lg:px-8 rounded-2xl dark:bg-black/80 dark:border-neutral-700">
                         <p class="text-md font-semibold mb-2 text-gray-900 dark:text-white">Start Now</p>
 
-                        <form class="flex flex-row gap-3 items-start md:items-center w-full mx-auto">
+                        <form class="flex flex-row gap-3 items-start md:items-center w-full mx-auto" method="GET" action="{{ route('events') }}">
                             <label for="voice-search" class="sr-only">Search</label>
                             <div class="relative w-full">
-                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Find an Events..." required />
+                                <input type="text" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Find an Events..." required />
                             </div>
                             <button type="submit" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <svg class="w-4 h-4 md:me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -57,6 +57,12 @@
                                 </svg><span class="hidden md:block">Search</span>
                             </button>
                         </form>
+
+                        <div class="flex flex-row flex-wrap gap-1 mt-3">
+                            @foreach ($categories as $category)
+                            <a class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-lg dark:bg-gray-700 dark:text-gray-300 cursor-pointer" href="{{ route('events', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 

@@ -5,6 +5,9 @@
     <div class="p-5 flex flex-col text-left">
         <div class="flex flex-row flex-wrap mb-2">
             <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-lg dark:bg-green-900 dark:text-green-300">Free</span>
+            @if(isset($event->category))
+                <span class="text-sm font-medium me-2 px-2.5 py-0.5 rounded-lg text-black dark:text-white" style="background: {{ $event->category->color }}4d;">{{ $event->category->name }}</span>
+            @endif
         </div>
 
         <p class="mb-2 text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($event->date)->format('d F Y') }}</p>

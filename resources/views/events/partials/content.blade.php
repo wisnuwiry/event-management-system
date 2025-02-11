@@ -67,6 +67,19 @@
                 <p>{{ $event->location }}</p>
             </div>
 
+            <!-- Category -->
+            @if(isset($event->category))
+            <h4 class="mt-4 text-lg lg:text-2xl font-bold text-gray-600 dark:text-white">{{ __('Category') }}</h4>
+
+            <div class="inline-flex gap-3 text-md font-bold mt-3.5 px-6 py-4 rounded-xl items-center" style="background: {{ $event->category->color }}4d; color: {{ $event->category->color }};">
+
+                @if(isset($event->category->icon)) <img src="{{ asset('storage/'. $event->category->icon) }}" alt="" class="size-10">
+                @else
+                @endif
+                <p>{{ $event->category->name }}</p>
+            </div>
+            @endif
+
             <!-- Donation -->
             <div class="mt-8 w-full p-6 border border-blue-200 rounded-lg shadow-sm bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900 dark:border-blue-700">
                 <svg class="w-7 h-7 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

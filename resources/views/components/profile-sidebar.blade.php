@@ -7,7 +7,7 @@
                 $avatar = Auth::user()->avatar;
                 $defaultAvatar = 'avatars/default.png';
                 @endphp
-                <img src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}" class="mr-3 h-8 w-8 rounded-md" alt="Bonnie avatar" />
+                <img src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}" class="mr-3 h-8 w-8 rounded-md object-cover" alt="Bonnie avatar" />
                 <div class="text-left">
                     <div class="mb-0.5 font-semibold leading-none text-gray-900 dark:text-white">{{ Auth::user()->name }}</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->email }}</div>

@@ -3,7 +3,7 @@
     $avatar = $user->avatar;
     $defaultAvatar = 'avatars/default.png';
     @endphp
-    <img class="rounded-full w-24 h-24" src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}">
+    <img class="rounded-full w-24 h-24 object-cover" src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}">
     
     <div class="flex flex-col mt-2">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">👋 Welcome Back, {{ $user->name }}</h5>

@@ -1,5 +1,5 @@
 <section class="bg-gray-50 dark:bg-gray-800 border-t border-b border-gray-100 dark:border-gray-700">
-    <div class="mx-auto max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:text-center">
+    <div class="mx-auto max-w-screen-xl px-4 py-8 lg:py-24 lg:text-center">
     <h2 class="mb-10 text-2xl font-bold tracking-tight text-gray-900 lg:font-extrabold lg:text-4xl lg:leading-snug dark:text-white lg:text-center 2xl:px-48">{{ __('Popular Events') }}</h2>
     
     <!-- Events -->

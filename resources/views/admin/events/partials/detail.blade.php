@@ -1,5 +1,5 @@
 <div class="flex flex-col lg:flex-row gap-8 mb-8">
-    <img src="{{ asset('storage/' . $event->thumbnail) }}" class="rounded-lg flex-1 w-full lg:w-[50%]" />
+    <img src="{{ asset('storage/' . $event->thumbnail) }}" class="rounded-lg flex-1 w-full lg:w-[50%] object-contain" />
     <div class="flex flex-col w-full flex-1 gap-2">
         <p class="text-lg text-gray-800 dark:text-gray-200">{{ \Carbon\Carbon::parse($event->date)->format('d F Y'); }} - <span class="font-medium">{{ $event->location }}</span></p>
         <p class="text-2xl text-gray-900 dark:text-white font-semibold">{{ $event->title }}</p>

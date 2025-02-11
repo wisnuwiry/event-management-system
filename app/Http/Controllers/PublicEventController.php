@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Carbon\Carbon;
@@ -13,16 +14,18 @@ class PublicEventController extends Controller
     {
         // Capture search keyword
         $search = $request->input('search');
+        $activeFilterCategory = $request->input('category');
+        $activeFilterCategory = $activeFilterCategory !== null ? (int) $activeFilterCategory : null;
 
-        // Query events with search filter and paginate results
-        $events = Event::when($search, function ($query, $search) {
-            $query->where('title', 'like', '%' . $search . '%');
-        })
+        $events = Event::when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
+            ->when($activeFilterCategory, fn($query) => $query->where('category_id', $activeFilterCategory))
             ->orderBy('date', 'asc')
             ->paginate(12)
             ->withQueryString();
 
-        return view('events.index', compact('events', 'search'));
+        $categories = Category::orderBy('created_at', 'desc')->get();
+
+        return view('events.index', compact('events', 'search', 'categories', 'activeFilterCategory'));
     }
 
     public function detail($slug)

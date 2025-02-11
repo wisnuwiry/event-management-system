@@ -7,7 +7,7 @@
           <div class="min-w-0 flex-1 gap-14 xl:flex xl:items-center">
           <div class="min-w-0 max-w-xl flex-1 gap-6 sm:flex sm:items-center">
               <div class="mb-4 flex aspect-square h-24 w-24 shrink-0 items-center sm:mb-0">
-              <img class="h-auto h-full w-full object-cover rounded-lg" src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event['title'] }} image" />
+              <img class="h-full w-full object-cover rounded-lg" src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event['title'] }} image" />
               </div>
               <a href="{{ route('events.detail', $event->slug) }}" class="mt-4 font-medium text-gray-900 hover:underline dark:text-white sm:mt-0">{{ $event->title }}</a>
           </div>

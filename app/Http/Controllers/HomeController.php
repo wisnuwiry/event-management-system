@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\News;
 use App\Models\Carousel;
 use App\Models\Partner;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,8 @@ class HomeController extends Controller
         $latestNews = News::orderBy('created_at', 'desc')->limit(4)->get();
         $carousels = Carousel::orderBy('created_at', 'desc')->get();
         $partners = Partner::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
 
-        return view('home.index', compact('latestEvents', 'popularEvents', 'latestNews', 'carousels', 'partners'));
+        return view('home.index', compact('latestEvents', 'popularEvents', 'latestNews', 'carousels', 'partners', 'categories'));
     }
 }

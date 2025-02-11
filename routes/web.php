@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SliderSettingController;
 use App\Http\Controllers\Admin\PartnerSettingController;
 use App\Http\Controllers\Admin\JournalSettingController;
 use App\Http\Controllers\Admin\BankSettingController;
+use App\Http\Controllers\Admin\CategorySettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicEventController;
@@ -51,7 +52,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/users/{id}', [UserController::class, 'show'])->name('admin.users.detail');
     Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::patch('/admin/users/{id}/update', [UserController::class, 'update'])->name('admin.users.update');
-    
+
     // Dashboard
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
@@ -110,6 +111,14 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::delete('admin/settings/bank/{bank}', [BankSettingController::class, 'destroy'])->name('admin.settings.bank.delete');
     Route::get('admin/settings/bank/{bank}/edit', [BankSettingController::class, 'edit'])->name('admin.settings.bank.edit');
     Route::post('admin/settings/bank/{bank}/update', [BankSettingController::class, 'update'])->name('admin.settings.bank.update');
+
+    // Category
+    Route::get('admin/settings/category', [CategorySettingController::class, 'index'])->name('admin.settings.category.index');
+    Route::get('admin/settings/category/create', [CategorySettingController::class, 'create'])->name('admin.settings.category.create');
+    Route::post('admin/settings/category', [CategorySettingController::class, 'store'])->name('admin.settings.category.store');
+    Route::delete('admin/settings/category/{category}', [CategorySettingController::class, 'destroy'])->name('admin.settings.category.delete');
+    Route::get('admin/settings/category/{category}/edit', [CategorySettingController::class, 'edit'])->name('admin.settings.category.edit');
+    Route::post('admin/settings/category/{category}/update', [CategorySettingController::class, 'update'])->name('admin.settings.category.update');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Partner;
 use App\Models\Journal;
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             $partners = Partner::orderBy('created_at', 'desc')->get();
             $journals = Journal::orderBy('created_at', 'desc')->get();
             $view->with('partners', $partners);
-            $view->with('journals', $journals);
+            $view->with('journals', $journals); 
         });
 
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {

@@ -17,7 +17,7 @@
                         $avatar = $user->avatar;
                         $defaultAvatar = 'avatars/default.png';
                     @endphp
-                    <img class="w-10 h-10 rounded-full" src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}" alt="{{ $user['name'] }} image">
+                    <img class="w-10 h-10 rounded-full object-cover" src="{{ asset('storage/' . ($avatar != null ? $avatar : $defaultAvatar)) }}" alt="{{ $user['name'] }} image">
                     <div class="ps-3">
                         <div class="text-base font-semibold">{{ $user['name'] }}</div>
                         <div class="font-normal text-gray-500">{{ $user['email'] }}</div>

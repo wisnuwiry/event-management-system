@@ -23,7 +23,7 @@
                     @foreach ($topDonatedEvents as $event)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-6 h-6 rounded-md" src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event['title'] }} image">
+                            <img class="w-6 h-6 rounded-md object-cover" src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event['title'] }} image">
                             <div class="ps-1">
                                 <a class="text-sm font-medium hover:text-blue-500 hover:underline" href="{{ route('admin.events.detail', $event->id) }}">{{ $event['title'] }}</a>
                             </div>

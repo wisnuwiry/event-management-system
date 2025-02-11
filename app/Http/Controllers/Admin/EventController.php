@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +30,9 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('admin.events.create');
+        $categories = Category::orderBy('created_at', 'desc')->get();
+
+        return view('admin.events.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -41,6 +44,7 @@ class EventController extends Controller
                 'location' => 'required|string|max:255',
                 'description' => 'required|string',
                 'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'category_id' => 'nullable|exists:categories,id',
             ]);
 
             $slug = Str::slug($request->title);
@@ -60,13 +64,14 @@ class EventController extends Controller
 
             $description = Purifier::clean($request->description);
 
-            $event = Event::create([
+            Event::create([
                 'title' => $request->title,
                 'slug' => $slug,
                 'thumbnail' => $thumb,
                 'date' => $formattedDate,
                 'location' => $request->location,
                 'description' => $description,
+                'category_id' => $request->category_id,
             ]);
 
             return redirect()->route('admin.events')->with('success', 'Event created successfully.');
@@ -87,8 +92,9 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $event->description = html_entity_decode($event->description);
         $event->date = Carbon::parse($event->date);
+        $categories = Category::orderBy('created_at', 'desc')->get();
 
-        return view('admin.events.edit', compact('event'));
+        return view('admin.events.edit', compact('event', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -100,6 +106,7 @@ class EventController extends Controller
                 'location' => 'required|string|max:255',
                 'description' => 'required',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'category_id' => 'nullable|exists:categories,id',
             ]);
 
             $event = Event::findOrFail($id);

@@ -6,13 +6,13 @@
             <div class="flex flex-row flex-nowrap animate-scroll-left hover:pause-animation gap-5">
                 @foreach ($rowPartners as $partner)
                 <a href="{{ $partner['link'] }}" class="flex flex-row rounded-lg gap-2 p-2 pr-6 items-center bg-gray-100 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
-                    <img src="{{ asset('storage/' . $partner['image']) }}" alt="{{ $partner['name'] }}" class="size-16 p-2">
+                    <img src="{{ asset('storage/' . $partner['image']) }}" alt="{{ $partner['name'] }}" class="size-16 p-2 object-contain">
                     <h3 class="w-full text-sm min-w-30 text-gray-900 dark:text-white">{{ $partner['name'] }}</h3>
                 </a>
                 @endforeach
                 @foreach ($rowPartners as $partner)
                 <a href="{{ $partner['link'] }}" class="flex flex-row rounded-lg gap-2 p-2 pr-6 items-center bg-gray-100 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
-                    <img src="{{ asset('storage/' . $partner['image']) }}" alt="{{ $partner['name'] }}" class="size-16 p-2">
+                    <img src="{{ asset('storage/' . $partner['image']) }}" alt="{{ $partner['name'] }}" class="size-16 p-2 object-contain">
                     <h3 class="w-full text-sm min-w-30 text-gray-900 dark:text-white">{{ $partner['name'] }}</h3>
                 </a>
                 @endforeach

@@ -1,4 +1,4 @@
-<div class="py-24">
+<div class="pb-24 pt-8">
     <div class="px-4 mx-auto max-w-screen-xl">
         @if(request('search'))
             <p class="inline-block mb-2 text-3xl text-center font-bold mb-16 w-full tracking-tight text-gray-900 dark:text-white">Search results for "{{ $search }}"</p>
